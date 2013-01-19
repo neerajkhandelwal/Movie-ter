@@ -1,0 +1,30 @@
+# Generates the corpus to play with.
+from pymysql import DB
+class Corpus(DB):
+	
+	dataSet = []
+	negatives = ["not", "n't"]#, "n't", "never", "no"]
+	
+	#some good list needed.
+	
+	stopWords = ["a", "a's", "about", "above", "according", "accordingly", "across", "actually", "after", "afterwards", "again", "ain't", "all", "almost", "alone", "along", "already", "also", "although", "always", "am", "among", "amongst", "an", "and", "another", "any", "anybody", "anyhow", "anyone", "anything", "anywhere", "apart", "appear", "are", "aren't", "around", "as", "aside", "ask", "asking", "associated", "at", "available", "away", "be", "became", "because", "become", "becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "besides", "between", "beyond", "both", "brief", "but", "by", "c'mon", "c's", "came", "can", "can't", "cannot", "cant", "cause", "causes", "certain", "certainly", "changes", "co", "com", "come", "comes", "concerning", "consequently", "consider", "considering", "contain", "containing", "contains", "corresponding", "could", "couldn't", "course", "currently", "described", "did", "didn't", "different", "do", "does", "doesn't", "doing", "don't", "done", "down", "downwards", "during", "each", "edu", "eg", "eight", "either", "else", "elsewhere", "enough", "entirely", "et", "etc", "ever", "every", "everybody", "everyone", "everything", "everywhere", "ex", "exactly", "example", "except", "far", "few", "fifth", "first", "five", "followed", "following", "follows", "for", "former", "formerly", "forth", "four", "from", "further", "furthermore", "get", "gets", "getting", "given", "gives", "go", "goes", "going", "gone", "got", "gotten", "greetings", "had", "hadn't", "happens", "has", "hasn't", "have", "haven't", "having", "he", "he's", "hello", "hence", "her", "here", "here's", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "hi", "him", "himself", "his", "hither", "how", "howbeit", "however", "i", "i'd", "i'll", "i'm", "i've", "ie", "if", "immediate", "in", "inasmuch", "inc", "indeed", "indicate", "indicated", "indicates", "inner", "insofar", "instead", "into", "inward", "is", "isn't", "it", "it'd", "it'll", "it's", "its", "itself", "keep", "keeps", "kept", "know", "knows", "known", "last", "lately", "later", "latter", "latterly",  "lest", "let", "let's", "liked", "likely", "look", "looking", "looks", "ltd", "mainly", "many", "may", "maybe", "me", "meanwhile", "might", "more", "moreover", "most", "mostly", "must", "my", "myself", "name", "namely", "nd", "near", "nearly", "needs", "neither", "never", "nevertheless", "new", "next", "nine", "no", "nobody", "non", "none", "noone", "nor", "normally", "nothing", "now", "nowhere", "of", "off", "often", "oh", "ok", "okay", "old", "on", "once", "one", "ones", "only", "onto", "or", "other", "others", "otherwise", "ought", "our", "ours", "ourselves", "out", "outside", "over", "overall", "own", "particular", "particularly", "per", "perhaps", "placed", "please", "plus", "possible", "presumably", "probably", "provides", "que", "quite", "qv", "rather", "rd", "re", "really", "regarding", "regardless", "regards", "relatively", "respectively", "said", "same", "saw", "say", "saying", "says", "second", "secondly", "see", "seeing", "seem", "seemed", "seeming", "seems", "seen", "self", "selves", "sent", "seven", "several", "shall", "she", "should", "shouldn't", "since", "six", "so", "some", "somebody", "somehow", "someone", "something", "sometime", "sometimes", "somewhat", "somewhere", "soon", "specified", "specify", "specifying", "still", "sub", "such", "sup", "sure", "t's", "take", "taken", "tell", "tends", "th", "than", "thanks", "thanx", "that", "that's", "thats", "the", "their", "theirs", "them", "themselves", "then", "thence", "there", "there's", "thereafter", "thereby", "therefore", "therein", "theres", "thereupon", "these", "they", "they'd", "they'll", "they're", "they've", "think", "third", "this", "thoroughly", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "took", "toward", "towards", "tried", "tries", "truly", "twice", "two", "un", "under", "unless", "until", "unto", "up", "upon", "us", "use", "used", "useful", "uses", "using", "usually", "various", "very", "via", "viz", "vs", "want", "wants", "was", "wasn't", "way", "we", "we'd", "we'll", "we're", "we've", "went", "were", "weren't", "what", "what's", "whatever", "when", "whence", "whenever", "where", "where's", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "who's", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "won't", "wonder", "would", "would", "wouldn't", "yes", "yet", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves", "zero", "movie_name_or_quote", "movie"]
+	
+	def getTweets(self):
+		query = ("SELECT tweet_id, tweet, movie_name FROM tweets1")
+		self.cursor.execute(query)
+		for (tweet_id, tweet, movie_name) in self.cursor:
+			if tweet_id != None and tweet != None:
+				self.dataSet.append({'tweet_id': tweet_id, 'tweet': tweet, 'movie_name': movie_name})
+				
+	def getTweetsWithNot(self):
+		query = ('''SELECT *  FROM `tweets1` WHERE `tweet` LIKE "% not %" ''')# OR  tweet LIKE "%n't%" OR tweet LIKE "% never %" OR tweet LIKE "% no %"''')
+		self.cursor.execute(query)
+		for (tweet_id, tweet, movie_name) in self.cursor:
+			if tweet_id != None and tweet != None:
+				self.dataSet.append({'tweet_id': tweet_id, 'tweet': tweet, 'movie_name': movie_name})
+
+		query = ('''SELECT *  FROM `tweets1` WHERE `tweet` LIKE "%n't %" ''')# OR  tweet LIKE "%n't%" OR tweet LIKE "% never %" OR tweet LIKE "% no %"''')
+		self.cursor.execute(query)
+		for (tweet_id, tweet, movie_name) in self.cursor:
+			if tweet_id != None and tweet != None:
+				self.dataSet.append({'tweet_id': tweet_id, 'tweet': tweet, 'movie_name': movie_name})
