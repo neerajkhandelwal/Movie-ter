@@ -1,5 +1,5 @@
 ##Sentiment Analysis of Movie Tweets
-This project analyzes the sentiment of the movie tweets. It scores each tweet where positive number implies postive sentiment and negative number implies negative sentiment.
+Sentiment analysis is a type of problem in Natural Language Processing. This project analyzes the sentiment of the movie tweets. It scores each tweet where positive number implies postive sentiment and negative number implies negative sentiment. Project is completely based on unsupervised learning.
 
 ####main.py
 This is the file we run to execute the project. It has the class Project which has several methods depending on the step you are performing in the project. Methods have been called in the main function of the file.
