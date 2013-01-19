@@ -18,3 +18,6 @@ Class Scoring inherits the class Preprocess class. Scoring has two methods of sc
 
 ####preprocess.py
 Class preprocess.py has various methods for processing the sentences or phrases or words. It holds the stopWords, processed_data(after preprocessing of the data initially) and seeds(generated).
+
+
+The file project_major is a sql file which has the data required for the sentiment analysis. Import this data file.
